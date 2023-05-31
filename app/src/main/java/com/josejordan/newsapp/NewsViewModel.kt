@@ -9,14 +9,14 @@ class NewsViewModel : ViewModel() {
 
     private val newsApi = NewsAPI.create()
     val newsLiveData = MutableLiveData<List<News>>()
-
+    private val errorLiveData = MutableLiveData<String>()
     fun getTopHeadlines(country: String, apiKey: String) {
         viewModelScope.launch {
             val response = newsApi.getTopHeadlines(country, apiKey)
             if (response.status == "ok") {
                 newsLiveData.value = response.articles
             } else {
-                // Handle the error here
+                errorLiveData.value = "There was an error fetching the news"
             }
         }
     }

@@ -2,12 +2,10 @@ package com.josejordan.newsapp
 
 import android.content.Intent
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.josejordan.newsapp.databinding.NewsItemBinding
 
 class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
 
@@ -19,8 +17,8 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.news_item, parent, false)
-        return NewsViewHolder(view)
+        val binding = NewsItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return NewsViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
@@ -29,10 +27,7 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
 
     override fun getItemCount() = newsList.size
 
-    inner class NewsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val titleView: TextView = itemView.findViewById(R.id.title)
-        private val descriptionView: TextView = itemView.findViewById(R.id.description)
-        private val imageView: ImageView = itemView.findViewById(R.id.image)
+    inner class NewsViewHolder(private val binding: NewsItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         init {
             itemView.setOnClickListener {
@@ -48,12 +43,12 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
         }
 
         fun bind(news: News) {
-            titleView.text = news.title
-            descriptionView.text = news.description
+            binding.title.text = news.title
+            binding.description.text = news.description
 
             Glide.with(itemView.context)
                 .load(news.urlToImage)
-                .into(imageView)
+                .into(binding.image)
         }
     }
 }

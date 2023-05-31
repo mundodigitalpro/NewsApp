@@ -1,5 +1,6 @@
 package com.josejordan.newsapp
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,11 +34,23 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
         private val descriptionView: TextView = itemView.findViewById(R.id.description)
         private val imageView: ImageView = itemView.findViewById(R.id.image)
 
+        init {
+            itemView.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val news: News = newsList[position]
+                    val intent = Intent(itemView.context, DetailActivity::class.java).apply {
+                        putExtra("news", news)
+                    }
+                    itemView.context.startActivity(intent)
+                }
+            }
+        }
+
         fun bind(news: News) {
             titleView.text = news.title
             descriptionView.text = news.description
 
-            // Load the image using a library like Glide
             Glide.with(itemView.context)
                 .load(news.urlToImage)
                 .into(imageView)

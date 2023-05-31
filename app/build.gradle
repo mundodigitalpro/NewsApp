@@ -8,6 +8,10 @@ android {
     namespace 'com.josejordan.newsapp'
     compileSdk 33
 
+    viewBinding {
+        enabled = true
+    }
+
     defaultConfig {
         applicationId "com.josejordan.newsapp"
         minSdk 21

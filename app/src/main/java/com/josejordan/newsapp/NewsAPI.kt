@@ -16,7 +16,7 @@ interface NewsAPI {
         fun create(): NewsAPI {
             val retrofit = Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl("https://newsapi.org/")
+                .baseUrl(Constants.BASE_URL)
                 .build()
 
             return retrofit.create(NewsAPI::class.java)

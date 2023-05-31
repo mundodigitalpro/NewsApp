@@ -1,18 +1,20 @@
 package com.josejordan.newsapp
 import android.os.Build
 import android.os.Bundle
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-//import com.squareup.picasso.Picasso
+import com.josejordan.newsapp.databinding.ActivityDetailBinding
+
 
 class DetailActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityDetailBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detail)
+
+        binding = ActivityDetailBinding.inflate(layoutInflater) // Initialize the binding
+        setContentView(binding.root)
 
         val news = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             intent.extras?.getParcelable("news", News::class.java)
@@ -23,30 +25,13 @@ class DetailActivity : AppCompatActivity() {
             return
         }
 
+        binding.tvTitle.text = news.title
+        binding.tvAuthor.text = news.author
+        binding.tvContent.text = news.content
+        binding.tvPublishedAt.text = news.publishedAt
 
-        val titleTextView = findViewById<TextView>(R.id.tvTitle)
-        titleTextView.text = news.title
-
-        val authorTextView = findViewById<TextView>(R.id.tvAuthor)
-        authorTextView.text = news.author
-
-        val descriptionTextView = findViewById<TextView>(R.id.tvDescription)
-        descriptionTextView.text = news.description
-
-        val contentTextView = findViewById<TextView>(R.id.tvContent)
-        contentTextView.text = news.content
-
-        val publishedAtTextView = findViewById<TextView>(R.id.tvPublishedAt)
-        publishedAtTextView.text = news.publishedAt
-
-/*        val newsImageView = findViewById<ImageView>(R.id.ivNewsImage)
         news.urlToImage?.let {
-            Picasso.get().load(it).into(newsImageView)
-        }*/
-
-        val newsImageView = findViewById<ImageView>(R.id.ivNewsImage)
-        news.urlToImage?.let {
-            Glide.with(this).load(it).into(newsImageView)
+            Glide.with(this).load(it).into(binding.ivNewsImage)
         }
 
     }

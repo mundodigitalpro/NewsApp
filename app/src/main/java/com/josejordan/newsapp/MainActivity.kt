@@ -5,26 +5,28 @@ import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.josejordan.newsapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var newsViewModel: NewsViewModel
     private lateinit var newsAdapter: NewsAdapter
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater) // Initialize the binding
+        setContentView(binding.root)
 
         initializeViewModel()
         initializeAdapter()
 
-        val recyclerView = setupRecyclerView()
-
-        bindAdapterToRecyclerView(recyclerView)
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        bindAdapterToRecyclerView(binding.recyclerView)
 
         observeNewsLiveData()
 
-        fetchTopHeadlines("us", "fbc62461560d4bd1a4d556eec82cda4b")
+        fetchTopHeadlines(Constants.COUNTRY, Constants.API_KEY)
     }
 
     private fun initializeViewModel() {

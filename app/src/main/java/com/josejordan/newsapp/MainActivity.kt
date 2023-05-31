@@ -2,6 +2,7 @@ package com.josejordan.newsapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -30,17 +31,24 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initializeViewModel() {
-        newsViewModel = ViewModelProvider(this).get(NewsViewModel::class.java)
+        val newsApi = NewsAPI.create()
+        val newsRepository = NewsRepositoryImpl(newsApi)
+
+        newsViewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                if (modelClass.isAssignableFrom(NewsViewModel::class.java)) {
+                    @Suppress("UNCHECKED_CAST")
+                    return NewsViewModel(newsRepository) as T
+                }
+                throw IllegalArgumentException("Unknown ViewModel class")
+            }
+        })[NewsViewModel::class.java]
     }
+
+
 
     private fun initializeAdapter() {
         newsAdapter = NewsAdapter()
-    }
-
-    private fun setupRecyclerView(): RecyclerView {
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        return recyclerView
     }
 
     private fun bindAdapterToRecyclerView(recyclerView: RecyclerView) {

@@ -5,18 +5,22 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 
-class NewsViewModel : ViewModel() {
+class NewsViewModel(private val repository: NewsRepository) : ViewModel() {
 
-    private val newsApi = NewsAPI.create()
     val newsLiveData = MutableLiveData<List<News>>()
     private val errorLiveData = MutableLiveData<String>()
+
     fun getTopHeadlines(country: String, apiKey: String) {
         viewModelScope.launch {
-            val response = newsApi.getTopHeadlines(country, apiKey)
-            if (response.status == "ok") {
-                newsLiveData.value = response.articles
-            } else {
-                errorLiveData.value = "There was an error fetching the news"
+            try {
+                val response = repository.getTopHeadlines(country, apiKey)
+                if (response.status == "ok") {
+                    newsLiveData.value = response.articles
+                } else {
+                    errorLiveData.value = "There was an error fetching the news"
+                }
+            } catch (e: Exception) {
+                errorLiveData.value = e.message
             }
         }
     }

@@ -1,4 +1,4 @@
-package com.josejordan.newsapp
+package com.josejordan.newsapp.data
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

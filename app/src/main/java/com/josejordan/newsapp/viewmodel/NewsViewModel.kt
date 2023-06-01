@@ -1,11 +1,16 @@
-package com.josejordan.newsapp
+package com.josejordan.newsapp.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.josejordan.newsapp.data.News
+import com.josejordan.newsapp.repository.NewsRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class NewsViewModel(private val repository: NewsRepository) : ViewModel() {
+@HiltViewModel
+class NewsViewModel @Inject constructor(private val repository: NewsRepository) : ViewModel() {
 
     val newsLiveData = MutableLiveData<List<News>>()
     private val errorLiveData = MutableLiveData<String>()

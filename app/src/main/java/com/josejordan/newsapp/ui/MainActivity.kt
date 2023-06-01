@@ -1,25 +1,27 @@
-package com.josejordan.newsapp
+package com.josejordan.newsapp.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.josejordan.newsapp.viewmodel.NewsViewModel
 import com.josejordan.newsapp.databinding.ActivityMainBinding
+import com.josejordan.newsapp.utils.Constants
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var newsViewModel: NewsViewModel
+    private val newsViewModel: NewsViewModel by viewModels()
     private lateinit var newsAdapter: NewsAdapter
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater) // Initialize the binding
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initializeViewModel()
         initializeAdapter()
 
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
@@ -29,23 +31,6 @@ class MainActivity : AppCompatActivity() {
 
         fetchTopHeadlines(Constants.COUNTRY, Constants.API_KEY)
     }
-
-    private fun initializeViewModel() {
-        val newsApi = NewsAPI.create()
-        val newsRepository = NewsRepositoryImpl(newsApi)
-
-        newsViewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                if (modelClass.isAssignableFrom(NewsViewModel::class.java)) {
-                    @Suppress("UNCHECKED_CAST")
-                    return NewsViewModel(newsRepository) as T
-                }
-                throw IllegalArgumentException("Unknown ViewModel class")
-            }
-        })[NewsViewModel::class.java]
-    }
-
-
 
     private fun initializeAdapter() {
         newsAdapter = NewsAdapter()
@@ -65,3 +50,4 @@ class MainActivity : AppCompatActivity() {
         newsViewModel.getTopHeadlines(country, apiKey)
     }
 }
+

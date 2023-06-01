@@ -1,4 +1,4 @@
-package com.josejordan.newsapp
+package com.josejordan.newsapp.data
 
 data class NewsResponse(
     val status: String,

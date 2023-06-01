@@ -1,4 +1,4 @@
-package com.josejordan.newsapp
+package com.josejordan.newsapp.utils
 
 object Constants {
     const val API_KEY = "fbc62461560d4bd1a4d556eec82cda4b"

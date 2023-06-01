@@ -1,12 +1,14 @@
-package com.josejordan.newsapp
+package com.josejordan.newsapp.ui
 import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.josejordan.newsapp.data.News
 import com.josejordan.newsapp.databinding.ActivityDetailBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
 

@@ -1,10 +1,11 @@
-package com.josejordan.newsapp
+package com.josejordan.newsapp.ui
 
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.josejordan.newsapp.data.News
 import com.josejordan.newsapp.databinding.NewsItemBinding
 
 class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {

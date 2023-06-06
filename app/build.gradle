@@ -53,8 +53,11 @@ dependencies {
     testImplementation 'org.mockito:mockito-core:3.9.0'
     androidTestImplementation 'org.mockito:mockito-android:3.9.0'
 
+
     // Coroutines test
-    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4'
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1'
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1'
+
 
     //ViewModel
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'

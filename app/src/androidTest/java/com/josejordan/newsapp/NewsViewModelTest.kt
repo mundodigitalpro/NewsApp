@@ -5,7 +5,6 @@ import com.josejordan.newsapp.repository.NewsRepository
 import com.josejordan.newsapp.viewmodel.NewsViewModel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Test
@@ -56,8 +55,6 @@ class NewsViewModelTest {
         // No need to assert anything here, because the `getTopHeadlines()` method should throw an exception when an unsupported country is passed in.
     }
 
-
-
     @Test
     fun testGetTopHeadlinesWithInvalidApiKey() = runBlocking {
         // Arrange
@@ -72,4 +69,8 @@ class NewsViewModelTest {
         // Assert
         // No need to assert anything here, because the `getTopHeadlines()` method should throw an exception when an invalid API key is passed in.
     }
+
+
 }
+
+
